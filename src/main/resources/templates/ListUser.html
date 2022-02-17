@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All_Users</title>
+</head>
+  <body>
+    <div th:each="person : ${admin}">
+      <a th:href="@{/admin/{id}(id=${person.getId()})}"
+       th:text="${person.getName() + ', ' + person.getLastName()}">user</a>
+      <a th:href="@{/admin/{id}(id=${person.getId()})}">User page</a>
+    </div>
+    <br/>
+    <hr/>
+    <a style="color:springgreen" href="/admin/createNew">Create new User</a>
+    <br/>
+    <br/>
+    <a href="/logout">Logout</a>
+  </body>
+</html>

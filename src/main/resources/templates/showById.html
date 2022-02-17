@@ -6,23 +6,24 @@
 </head>
 <body>
 <p th:text="${person.getName()}">Name</p>
-<br/>
 <p th:text="${person.getLastName()}">Last Name</p>
-<br/>
 <p th:text="${person.getAge()}">Age</p>
-<br/>
 <p th:text="${person.getCountry()}">Country</p>
-<br/>
 <p th:text="${person.getPhoneNumber()}">PhoneNumber</p>
-<br/>
 <p th:text="${person.getEmail()}">Email</p>
-<br/>
 <p th:text="${person.getPassword()}">Password</p>
-<br/>
 <br/>
 <td>
     <li th:each="role: ${person.getRoles()}" th:text="${role.getRole()}"></li>
 </td>
+<hr/>
+<br/>
+<a th:href="@{/admin/{id}/Update(id=${person.getId()})}">Update user</a>
+<br/>
+<br/>
+<form th:method="DELETE" th:action="@{/admin/{id}(id=${person.getId()})}">
+    <input type="submit" value="Delete user"/>
+</form>
 <br/>
 <br/>
 <a href="/admin">return Admin</a>
