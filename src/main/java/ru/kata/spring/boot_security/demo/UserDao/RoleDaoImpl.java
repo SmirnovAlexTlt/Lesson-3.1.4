@@ -1,24 +1,21 @@
 package ru.kata.spring.boot_security.demo.UserDao;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.UserModel;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
-@Component
+
+@Repository
 public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public RoleDaoImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
 
     @Override
     public List<Role> getAllRoles() {
