@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.UserService;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.UserDao.RoleDao;
 import ru.kata.spring.boot_security.demo.UserDao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.UserModel;
@@ -16,12 +15,11 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     private final UserDao userDao;
-    private final RoleDao roleDao;
 
-    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserDao userDao, RoleDao roleDao) {
+
+    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserDao userDao) {
         this.passwordEncoder = passwordEncoder;
         this.userDao = userDao;
-        this.roleDao = roleDao;
     }
 
     @Override
