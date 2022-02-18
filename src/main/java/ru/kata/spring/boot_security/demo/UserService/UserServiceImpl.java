@@ -2,11 +2,10 @@ package ru.kata.spring.boot_security.demo.UserService;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.UserDao.RoleDao;
 import ru.kata.spring.boot_security.demo.UserDao.UserDao;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.UserModel;
-
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
@@ -17,10 +16,12 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     private final UserDao userDao;
+    private final RoleDao roleDao;
 
-    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserDao userDao) {
+    public UserServiceImpl(BCryptPasswordEncoder passwordEncoder, UserDao userDao, RoleDao roleDao) {
         this.passwordEncoder = passwordEncoder;
         this.userDao = userDao;
+        this.roleDao = roleDao;
     }
 
     @Override
@@ -38,15 +39,25 @@ public class UserServiceImpl implements UserService {
     public void add(UserModel userModel, Set<Role> roles) {
         userModel.setRoles(roles);
         userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
-        userDao.add(userModel, roles);
+        userDao.add(userModel);
     }
 
     @Transactional
     @Override
     public void update(UserModel userModel, Set<Role> roles) {
+        String passwordEncode = userModel.getPassword();
+        String password = showUserById(userModel.getId()).getPassword();
+        if (passwordEncode.equals(password)){
+            userModel.setPassword(password);
+        }else {
+            if (passwordEncoder.matches(passwordEncode,password)){
+                userModel.setPassword(password);
+            }else {
+                userModel.setPassword(passwordEncoder.encode(passwordEncode));
+            }
+        }
         userModel.setRoles(roles);
-        userModel.setPassword((userModel.getPassword()));
-        userDao.update(userModel, roles);
+        userDao.update(userModel);
     }
 
     @Transactional
@@ -60,8 +71,4 @@ public class UserServiceImpl implements UserService {
         return userDao.showUserByEmail(email);
     }
 
-    @Override
-    public Set<Role> findRoles(List<Long> roles) {
-        return userDao.findRoles(roles);
-    }
 }

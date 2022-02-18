@@ -6,11 +6,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.UserDao.UserDao;
 
-
-
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     private final UserDao userDao;
 
     public UserDetailsServiceImpl(UserDao userDao) {
@@ -25,6 +23,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return user;
     }
-
-
 }

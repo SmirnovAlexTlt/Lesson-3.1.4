@@ -3,8 +3,8 @@ package ru.kata.spring.boot_security.demo.UserService;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.UserDao.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
-
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -26,12 +26,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getRoleByRole(String role) {
-        return roleDao.getRoleByRole(role);
+    public void addRole(Set<Role> roles) {
+        roleDao.addRole(roles);
     }
 
     @Override
-    public void addRole(Role role) {
-        roleDao.addRole(role);
+    public Set<Role> findRoles(List<Long> roles) {
+        return roleDao.findRoles(roles);
     }
 }

@@ -1,14 +1,13 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.UserService.RoleService;
 import ru.kata.spring.boot_security.demo.UserService.UserService;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.UserModel;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 
@@ -17,10 +16,11 @@ import java.util.ArrayList;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
-
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -45,7 +45,7 @@ public class AdminController {
                                 BindingResult bindingResult, @RequestParam("listRoles") ArrayList<Long> roles) {
         if (bindingResult.hasErrors())
             return "newUser";
-        userService.add(userModel, userService.findRoles(roles));
+        userService.add(userModel, roleService.findRoles(roles));
         return "redirect:/admin";
     }
 
@@ -61,7 +61,7 @@ public class AdminController {
                          @RequestParam("listRoles1") ArrayList<Long> roles) {
         if (bindingResult.hasErrors())
             return "Update";
-        userService.update(userModel, userService.findRoles(roles));
+        userService.update(userModel, roleService.findRoles(roles));
         return "redirect:/admin";
     }
 
@@ -70,6 +70,4 @@ public class AdminController {
         userService.delete(id);
         return "redirect:/admin";
     }
-
-
 }

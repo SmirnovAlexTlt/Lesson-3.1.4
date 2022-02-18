@@ -1,21 +1,19 @@
 package ru.kata.spring.boot_security.demo.UserDao;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.kata.spring.boot_security.demo.model.Role;
-
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
 
     @PersistenceContext
     private EntityManager entityManager;
-
 
     @Override
     public List<Role> getAllRoles() {
@@ -28,12 +26,14 @@ public class RoleDaoImpl implements RoleDao {
     }
 
     @Override
-    public Role getRoleByRole(String role) {
-        return entityManager.find(Role.class, role);
+    public void addRole(Set<Role> roles) {
+        entityManager.persist(roles);
     }
 
     @Override
-    public void addRole(Role role) {
-        entityManager.persist(role);
+    public Set<Role> findRoles(List<Long> roles) {
+        TypedQuery<Role> q = entityManager.createQuery("select r from Role r where r.id in :role", Role.class);
+        q.setParameter("role", roles);
+        return new HashSet<>(q.getResultList());
     }
 }
