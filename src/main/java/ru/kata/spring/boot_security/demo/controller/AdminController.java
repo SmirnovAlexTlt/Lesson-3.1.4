@@ -5,14 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.UserDao.UserDao;
 import ru.kata.spring.boot_security.demo.UserService.UserService;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.UserModel;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
@@ -51,7 +49,7 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/{id}/update")
+    @GetMapping("/{id}/Update")
     public String ShowById(Model model, @PathVariable("id") Long id) {
         model.addAttribute("person", userService.showUserById(id));
         return "Update";
@@ -59,11 +57,10 @@ public class AdminController {
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person") @Valid UserModel userModel,
-                         Model model, BindingResult bindingResult, @PathVariable("id") long id,
+                          BindingResult bindingResult, @PathVariable("id") long id,
                          @RequestParam("listRoles1") ArrayList<Long> roles) {
         if (bindingResult.hasErrors())
             return "Update";
-        model.addAttribute("roles", userService.findRoles(roles));
         userService.update(userModel, userService.findRoles(roles));
         return "redirect:/admin";
     }
