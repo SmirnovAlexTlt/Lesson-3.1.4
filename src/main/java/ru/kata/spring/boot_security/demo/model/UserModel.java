@@ -36,16 +36,6 @@ public class UserModel implements UserDetails {
     @Column
     private int age;
 
-    @Column
-    @NotEmpty(message = "Country must not be empty")
-    @Size(min = 5, max = 20, message = "Country must be between 5 and 20")
-    private String country;
-
-    @Column
-    @Size(min = 1, max = 15, message = "Phone must be between 1 and 15")
-    private String phoneNumber;
-
-
     @Column(name = "email", unique = true)
     @Email(message = "Email must be valid")
     private String email;
@@ -65,19 +55,17 @@ public class UserModel implements UserDetails {
     }
 
     public UserModel(String name, String lastName, int age,
-                     String country, String phoneNumber, String email, String userPassword) {
+                     String email, String userPassword) {
         this.name = name;
         this.lastName = lastName;
         this.age = age;
-        this.country = country;
-        this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = userPassword;
     }
 
     public UserModel(String name, String lastname, int age,
-                     String country, String phoneNumber, String email, String password, Set<Role> roles) {
-        this(name, lastname, age, country, phoneNumber, email, password);
+                     String email, String password, Set<Role> roles) {
+        this(name, lastname, age, email, password);
         this.roles = roles;
     }
 
