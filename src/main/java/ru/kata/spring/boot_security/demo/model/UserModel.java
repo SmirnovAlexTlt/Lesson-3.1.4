@@ -26,7 +26,7 @@ public class UserModel implements UserDetails {
     @Column
     @NotEmpty(message = "Name should not be empty")
     @Size(min = 2, max = 20, message = "Name must be between 2 and 20")
-    private String name;
+    private String firstName;
 
     @Column
     @NotEmpty(message = "LastName should not be empty")
@@ -54,18 +54,18 @@ public class UserModel implements UserDetails {
     public UserModel() {
     }
 
-    public UserModel(String name, String lastName, int age,
+    public UserModel(String firstName, String lastName, int age,
                      String email, String userPassword) {
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.email = email;
         this.password = userPassword;
     }
 
-    public UserModel(String name, String lastname, int age,
+    public UserModel(String firstName, String lastname, int age,
                      String email, String password, Set<Role> roles) {
-        this(name, lastname, age, email, password);
+        this(firstName, lastname, age, email, password);
         this.roles = roles;
     }
 

@@ -17,12 +17,6 @@
             <h4 th:text="${person.getEmail()} + ' with roles:'">Email</h4>
         </div>
 
-        <div class="col-sm-auto" style="color: aliceblue; padding-left: 0px">
-            <h4>
-                <tr th:each="role : ${person.getRoles()}" th:text="${role.getRole().substring(5)}">Role</tr>
-            </h4>
-        </div>
-
         <div class="col-sm-1" style="padding-top: 5px; margin-left: auto; margin-right: 5px">
             <h6><a style="color: #a9a9a9" href="/logout">Logout</a></h6>
         </div>
@@ -60,18 +54,7 @@
                                         <th>Role</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th th:text="${person.getId()}">Id</th>
-                                        <td th:text="${person.getName()}">Name</td>
-                                        <td th:text="${person.getLastName()}">Surname</td>
-                                        <td th:text="${person.getAge()}">Age</td>
-                                        <td th:text="${person.getEmail()}">Email</td>
-                                        <td>
-                                            <p th:each="role : ${person.getRoles()}" th:text="${role.getRole().substring(5)}">Role</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
+                                    <tbody id="infoTable"></tbody>
                                 </table>
                             </blockquote>
                         </div>
